@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>myCalculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <header class="bg-blue-600 text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">AppStore pour Calculatrices</div>
+    <a href="favoris.html" class="bg-white text-blue-600 px-3 py-1 rounded hover:bg-blue-100 text-sm font-medium">
+      ⭐ Mes Favoris
+    </a>
+  </header>
+
+  <main class="p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="appGrid"></div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-6 w-96">
+      <h3 class="text-xl font-bold mb-4">Choisir sa calculatrice</h3>
+      <div class="space-y-3">
+        <button class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600" onclick="redirectToCalc('TI-83')">TI-83</button>
+        <button class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600" onclick="redirectToCalc('Casio fx-991')">Casio fx-991</button>
+        <button class="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-600" onclick="redirectToCalc('NumWorks')">NumWorks</button>
+      </div>
+      <button class="mt-4 text-sm text-gray-500 hover:underline" onclick="closeModal()">Annuler</button>
+    </div>
+  </div>
+
+  <script>
+    const apps = [
+      {
+        name: "App de Graphiques",
+        description: "Tracez des fonctions mathématiques facilement.",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+               </svg>`
+      },
+      {
+        name: "Solveur d’équations",
+        description: "Résolvez des équations complexes.",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+               </svg>`
+      },
+      {
+        name: "Convertisseur d’unités",
+        description: "Convertissez rapidement entre unités.",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+               </svg>`
+      }
+    ];
+
+    const links = {
+      "TI-83": {
+        "App de Graphiques": "https://example.com/ti83/graph",
+        "Solveur d’équations": "https://example.com/ti83/solve",
+        "Convertisseur d’unités": "https://example.com/ti83/convert"
+      },
+      "Casio fx-991": {
+        "App de Graphiques": "https://example.com/casio/graph",
+        "Solveur d’équations": "https://example.com/casio/solve",
+        "Convertisseur d’unités": "https://example.com/casio/convert"
+      },
+      "NumWorks": {
+        "App de Graphiques": "https://example.com/numworks/graph",
+        "Solveur d’équations": "https://example.com/numworks/solve",
+        "Convertisseur d’unités": "https://example.com/numworks/convert"
+      }
+    };
+
+    let selectedApp = "";
+    let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+    function renderApps() {
+      const grid = document.getElementById("appGrid");
+      grid.innerHTML = "";
+
+      apps.forEach(app => {
+        const isFav = favorites.includes(app.name);
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-lg shadow-md p-4 relative hover:shadow-xl transition";
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div>${app.icon}</div>
+            <button onclick="toggleFavorite('${app.name}')" class="text-yellow-400 hover:text-yellow-500 text-xl">
+              ${isFav ? "★" : "☆"}
+            </button>
+          </div>
+          <h2 class="text-xl font-semibold mt-2 cursor-pointer" onclick="openModal('${app.name}')">${app.name}</h2>
+          <p class="text-gray-600 mt-1">${app.description}</p>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleFavorite(appName) {
+      if (favorites.includes(appName)) {
+        favorites = favorites.filter(name => name !== appName);
+      } else {
+        favorites.push(appName);
+      }
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      renderApps();
+    }
+
+    function openModal(appName) {
+      selectedApp = appName;
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    function redirectToCalc(calcName) {
+      const url = links[calcName][selectedApp];
+      window.location.href = url;
+    }
+
+    renderApps();
+  </script>
+
+</body>
+</html>
