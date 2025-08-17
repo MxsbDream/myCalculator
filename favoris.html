@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mes Favoris</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <header class="bg-yellow-500 text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">⭐ Mes Apps Favoris</div>
+    <a href="index.html" class="bg-white text-yellow-600 px-3 py-1 rounded hover:bg-yellow-100 text-sm font-medium">
+      ← Retour
+    </a>
+  </header>
+
+  <main class="p-6">
+    <div id="favGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+    <p id="emptyMsg" class="text-center text-gray-500 mt-10 hidden">Aucune app en favori pour le moment.</p>
+  </main>
+
+  <script>
+    const apps = [
+      {
+        name: "App de Graphiques",
+        description: "Tracez des fonctions mathématiques facilement.",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+               </svg>`
+      },
+      {
+        name: "Solveur d’équations",
+        description: "Résolvez des équations complexes.",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+               </svg>`
+      },
+      {
+        name: "Convertisseur d’unités",
+        description: "Convertissez rapidement entre unités.",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">[&#95;{{{CITATION{{{&#95;5{](https://github.com/SteveDevs/LiveAppointment/tree/d0cfff3936510a10277b9aba56d563a0b20dbf72/resources%2Fviews%2Flivewire%2Fdatatables%2Ficons%2Fchevron-down.blade.php)
